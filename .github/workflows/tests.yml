@@ -15,10 +15,16 @@ jobs:
         with:
           php-version: '8.2'
           extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite3, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, fileinfo
-          coverage: none
+          coverage: pcov
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-interaction
 
-      - name: Execute tests
-        run: vendor/bin/phpunit
+      - name: Execute tests and coverage
+        run: vendor/bin/phpunit --coverage-xml=build/coverage/coverage-xml --log-junit=build/coverage/phpunit.junit.xml
+
+      - name: Static Analysis
+        run: vendor/bin/phpstan analyse src tests --level 9
+
+      - name: Mutation Testing
+        run: vendor/bin/infection --show-mutations --coverage=build/coverage --min-msi=100 --min-covered-msi=100

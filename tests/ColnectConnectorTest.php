@@ -64,6 +64,7 @@ class ColnectConnectorTest extends TestCase
         $this->assertArrayHasKey('Capi-Hash', $headers);
 
         $sentTimestamp = $headers['Capi-Timestamp'];
+        $this->assertIsString($sentTimestamp);
         $this->assertIsNumeric($sentTimestamp);
 
         $path = $pendingRequest->getUri()->getPath();
