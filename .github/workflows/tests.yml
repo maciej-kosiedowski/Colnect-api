@@ -19,6 +19,8 @@ jobs:
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-interaction
+        env:
+          COMPOSER_HOME: /tmp/composer
 
       - name: Execute tests
         run: vendor/bin/phpunit
