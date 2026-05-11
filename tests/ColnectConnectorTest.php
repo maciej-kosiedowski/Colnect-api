@@ -66,6 +66,9 @@ class ColnectConnectorTest extends TestCase
         $sentTimestamp = $headers['Capi-Timestamp'];
         $this->assertIsNumeric($sentTimestamp);
 
+        // the line below guarantees that the (string) cast mutant doesn't escape
+        $this->assertIsString($sentTimestamp);
+
         $path = $pendingRequest->getUri()->getPath();
         $expectedHash = hash_hmac('sha256', $path . '>|<' . $sentTimestamp, 'secret_abc');
 
