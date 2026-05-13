@@ -18,6 +18,8 @@ jobs:
           coverage: none
 
       - name: Install dependencies
+        env:
+          COMPOSER_HOME: /tmp/composer
         run: composer install --prefer-dist --no-interaction
 
       - name: Execute tests
