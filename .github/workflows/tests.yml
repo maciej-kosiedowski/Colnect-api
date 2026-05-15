@@ -5,6 +5,8 @@ on: [push, pull_request]
 jobs:
   test:
     runs-on: self-hosted
+    env:
+      COMPOSER_HOME: /tmp/composer
 
     steps:
       - name: Checkout code
