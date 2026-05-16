@@ -71,7 +71,7 @@ class ColnectConnector extends Connector
      */
     public function boot(PendingRequest $pendingRequest): void
     {
-        $timestamp = (string) time();
+        $timestamp = strval(time());
         $path = $pendingRequest->getUri()->getPath();
         $hash = hash_hmac('sha256', $path . '>|<' . $timestamp, $this->appSecret);
 

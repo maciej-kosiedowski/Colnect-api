@@ -65,10 +65,32 @@ class ColnectConnectorTest extends TestCase
 
         $sentTimestamp = $headers['Capi-Timestamp'];
         $this->assertIsNumeric($sentTimestamp);
+        $this->assertIsString($sentTimestamp);
+        $this->assertSame((string) (int) $sentTimestamp, $sentTimestamp);
 
         $path = $pendingRequest->getUri()->getPath();
-        $expectedHash = hash_hmac('sha256', $path . '>|<' . $sentTimestamp, 'secret_abc');
+        $expectedHash = hash_hmac('sha256', $path . '>|<' . (string) $sentTimestamp, 'secret_abc');
 
         $this->assertEquals($expectedHash, $headers['Capi-Hash']);
+    }
+
+    public function test_timestamp_is_strictly_string(): void
+    {
+        $connector = new ColnectConnector('app_123', 'secret_abc', 'en');
+        $request = new GetLanguagesRequest();
+        $mockClient = new MockClient([
+            GetLanguagesRequest::class => MockResponse::make(['success' => true]),
+        ]);
+        $connector->withMockClient($mockClient);
+
+        $response = $connector->send($request);
+        $pendingRequest = $response->getPendingRequest();
+
+        $timestamp = $pendingRequest->headers()->get('Capi-Timestamp');
+
+        $this->assertIsString($timestamp);
+
+        // This fails the mutant replacing $timestamp = strval(time()); with $timestamp = time();
+        $this->assertSame((string) (int) $timestamp, $timestamp);
     }
 }
