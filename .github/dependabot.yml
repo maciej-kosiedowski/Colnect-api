@@ -1,0 +1,35 @@
+version: 2
+updates:
+  # Composer (PHP) dependencies — widen keeps the broadest compatible range
+  - package-ecosystem: "composer"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    versioning-strategy: widen
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+    groups:
+      dev-tools:
+        patterns:
+          - "phpunit/*"
+          - "phpstan/*"
+          - "infection/*"
+        update-types:
+          - "minor"
+          - "patch"
+    ignore:
+      # Skip major bumps of the core library — these require deliberate review
+      - dependency-name: "saloonphp/saloon"
+        update-types: ["version-update:semver-major"]
+
+  # GitHub Actions — keep pinned SHA hashes current
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
