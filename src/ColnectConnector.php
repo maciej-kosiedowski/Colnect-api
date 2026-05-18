@@ -31,9 +31,23 @@ class ColnectConnector extends Connector
      * @param string $appId
      * @param string $appSecret
      * @param string $language
+     *
+     * @throws \InvalidArgumentException When inputs would corrupt the request URL.
      */
     public function __construct(string $appId, string $appSecret, string $language = 'en')
     {
+        if (preg_match('/^[A-Za-z0-9_-]+$/', $appId) !== 1) {
+            throw new \InvalidArgumentException('App ID must contain only letters, digits, underscores or hyphens.');
+        }
+
+        if ($appSecret === '') {
+            throw new \InvalidArgumentException('App secret must not be empty.');
+        }
+
+        if (preg_match('/^[a-z]{2}(_[A-Z]{2})?$/', $language) !== 1) {
+            throw new \InvalidArgumentException('Language must be a 2-letter code, optionally with a region (e.g. "en" or "en_US").');
+        }
+
         $this->appId = $appId;
         $this->appSecret = $appSecret;
         $this->language = $language;

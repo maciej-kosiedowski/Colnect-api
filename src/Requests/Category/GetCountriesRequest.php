@@ -24,9 +24,15 @@ class GetCountriesRequest extends Request
 
     /**
      * @param CategoryType|string $category
+     *
+     * @throws \InvalidArgumentException When a string category contains unexpected characters.
      */
     public function __construct(CategoryType|string $category)
     {
+        if (is_string($category) && preg_match('/^[a-z_]+$/', $category) !== 1) {
+            throw new \InvalidArgumentException('Category must contain only lowercase letters and underscores.');
+        }
+
         $this->category = $category;
     }
 
@@ -39,6 +45,6 @@ class GetCountriesRequest extends Request
     {
         $categoryValue = $this->category instanceof CategoryType ? $this->category->value : $this->category;
 
-        return "/countries/cat/{$categoryValue}";
+        return '/countries/cat/' . rawurlencode($categoryValue);
     }
 }

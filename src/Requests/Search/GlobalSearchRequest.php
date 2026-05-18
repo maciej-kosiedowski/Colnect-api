@@ -35,9 +35,23 @@ class GlobalSearchRequest extends Request
      * @param string $collectableType Type of collectable (e.g. 'stamps', 'collectors')
      * @param string $searchQuery Required search query
      * @param int|null $page Optional page number
+     *
+     * @throws \InvalidArgumentException When inputs are empty or malformed.
      */
     public function __construct(string $collectableType, string $searchQuery, ?int $page = null)
     {
+        if (preg_match('/^[a-z_]+$/', $collectableType) !== 1) {
+            throw new \InvalidArgumentException('Collectable type must contain only lowercase letters and underscores.');
+        }
+
+        if ($searchQuery === '') {
+            throw new \InvalidArgumentException('Search query must not be empty.');
+        }
+
+        if ($page !== null && $page < 1) {
+            throw new \InvalidArgumentException('Page must be a positive integer.');
+        }
+
         $this->collectableType = $collectableType;
         $this->searchQuery = $searchQuery;
         $this->page = $page;
@@ -50,10 +64,11 @@ class GlobalSearchRequest extends Request
      */
     public function resolveEndpoint(): string
     {
-        $endpoint = "/search/collectibles/{$this->collectableType}/q/{$this->searchQuery}";
+        $endpoint = '/search/collectibles/' . rawurlencode($this->collectableType)
+            . '/q/' . rawurlencode($this->searchQuery);
 
         if ($this->page !== null) {
-            $endpoint .= "/page/{$this->page}";
+            $endpoint .= '/page/' . $this->page;
         }
 
         return $endpoint;
