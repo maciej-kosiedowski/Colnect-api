@@ -26,4 +26,10 @@ class GetItemsListRequestTest extends TestCase
         $this->assertEquals(Method::GET, $request->getMethod());
         $this->assertEquals('/items/cat/coins', $request->resolveEndpoint());
     }
+
+    public function test_it_rejects_string_category_with_path_traversal(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new GetItemsListRequest('../admin');
+    }
 }
