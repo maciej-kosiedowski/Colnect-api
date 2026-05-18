@@ -65,6 +65,7 @@ class ColnectConnectorTest extends TestCase
 
         $sentTimestamp = $headers['Capi-Timestamp'];
         $this->assertIsNumeric($sentTimestamp);
+        $this->assertSame((string)(int)$sentTimestamp, $sentTimestamp);
 
         $path = $pendingRequest->getUri()->getPath();
         $expectedHash = hash_hmac('sha256', $path . '>|<' . $sentTimestamp, 'secret_abc');
