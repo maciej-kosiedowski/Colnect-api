@@ -24,7 +24,7 @@ class GlobalSearchRequest extends Request
     /**
      * @var string
      */
-    protected string $query;
+    protected string $searchQuery;
 
     /**
      * @var int|null
@@ -33,13 +33,13 @@ class GlobalSearchRequest extends Request
 
     /**
      * @param string $collectableType Type of collectable (e.g. 'stamps', 'collectors')
-     * @param string $query Required search query
+     * @param string $searchQuery Required search query
      * @param int|null $page Optional page number
      */
-    public function __construct(string $collectableType, string $query, ?int $page = null)
+    public function __construct(string $collectableType, string $searchQuery, ?int $page = null)
     {
         $this->collectableType = $collectableType;
-        $this->query = $query;
+        $this->searchQuery = $searchQuery;
         $this->page = $page;
     }
 
@@ -50,7 +50,7 @@ class GlobalSearchRequest extends Request
      */
     public function resolveEndpoint(): string
     {
-        $endpoint = "/search/collectibles/{$this->collectableType}/q/{$this->query}";
+        $endpoint = "/search/collectibles/{$this->collectableType}/q/{$this->searchQuery}";
 
         if ($this->page !== null) {
             $endpoint .= "/page/{$this->page}";
