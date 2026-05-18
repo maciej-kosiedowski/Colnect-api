@@ -26,4 +26,10 @@ class GetCountriesRequestTest extends TestCase
         $this->assertEquals(Method::GET, $request->getMethod());
         $this->assertEquals('/countries/cat/stamps', $request->resolveEndpoint());
     }
+
+    public function test_it_rejects_string_category_with_path_traversal(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new GetCountriesRequest('../admin');
+    }
 }

@@ -72,4 +72,29 @@ class ColnectConnectorTest extends TestCase
 
         $this->assertEquals($expectedHash, $headers['Capi-Hash']);
     }
+
+    public function test_it_rejects_app_id_with_slashes(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new ColnectConnector('../evil', 'secret_abc', 'en');
+    }
+
+    public function test_it_rejects_empty_app_secret(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new ColnectConnector('app_123', '', 'en');
+    }
+
+    public function test_it_rejects_language_with_path_traversal(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new ColnectConnector('app_123', 'secret_abc', '../../evil.com/x');
+    }
+
+    public function test_it_accepts_locale_with_region(): void
+    {
+        $connector = new ColnectConnector('app_123', 'secret_abc', 'en_US');
+
+        $this->assertEquals('https://api.colnect.net/en_US/api/app_123', $connector->resolveBaseUrl());
+    }
 }
