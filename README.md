@@ -19,6 +19,7 @@ A lightweight, fully typed PHP SDK for the [Colnect](https://colnect.com) REST A
 - [Available requests](#available-requests)
 - [Working with categories](#working-with-categories)
 - [Mocking & testing your integration](#mocking--testing-your-integration)
+- [Sentry integration](#sentry-integration)
 - [Development](#development)
   - [Running the test suite](#running-the-test-suite)
   - [Static analysis](#static-analysis)
@@ -183,6 +184,43 @@ $languages = $connector->send(new GetLanguagesRequest())->json();
 ```
 
 See [`tests/ColnectConnectorTest.php`](tests/ColnectConnectorTest.php) for end-to-end examples of asserting headers, payloads and the HMAC signature.
+
+## Sentry integration
+
+The SDK ships with an optional [Sentry](https://sentry.io) integration that records an HTTP breadcrumb for every outgoing request and reports failed responses or fatal transport exceptions as Sentry events. It is implemented as Saloon middleware so it sits transparently in front of every request you send.
+
+Install the Sentry SDK alongside this package:
+
+```bash
+composer require sentry/sentry:^4.0
+```
+
+Initialize Sentry once during your application's bootstrap, then attach the integration to the connector:
+
+```php
+use Sentry\State\Hub;
+use Vendor\ColnectApi\ColnectConnector;
+use Vendor\ColnectApi\Sentry\SentryIntegration;
+
+\Sentry\init([
+    'dsn' => getenv('SENTRY_DSN'),
+]);
+
+$connector = new ColnectConnector(
+    appId:     getenv('COLNECT_APP_ID'),
+    appSecret: getenv('COLNECT_APP_SECRET'),
+);
+
+SentryIntegration::register($connector);
+```
+
+What you get:
+
+- **Breadcrumbs** – one `http.client` breadcrumb per outgoing request and one per response (with the HTTP method, URL and status code).
+- **Exception capture** – any failed response (the connector throws by default on 4xx/5xx) and any fatal transport error are sent to Sentry via `captureException()`.
+- **Safe by default** – when `sentry/sentry` is not installed the integration is a complete no-op, so this SDK keeps zero runtime dependencies beyond Saloon.
+
+The integration is opt-in; nothing is registered automatically. See [`tests/Sentry/SentryIntegrationTest.php`](tests/Sentry/SentryIntegrationTest.php) for a worked example using a stub Sentry transport.
 
 ## Development
 
