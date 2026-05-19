@@ -67,7 +67,7 @@ class ColnectConnectorTest extends TestCase
         $sentTimestamp = $headers['Capi-Timestamp'];
         $this->assertSame((string) (int) $sentTimestamp, $sentTimestamp);
 
-        $path = $pendingRequest->getUri()->getPath();
+        $path = (string) parse_url($pendingRequest->getUrl(), PHP_URL_PATH);
         $expectedHash = hash_hmac('sha256', $path . '>|<' . $sentTimestamp, 'secret_abc');
 
         $this->assertEquals($expectedHash, $headers['Capi-Hash']);
