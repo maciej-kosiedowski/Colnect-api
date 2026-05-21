@@ -86,7 +86,8 @@ class ColnectConnector extends Connector
     public function boot(PendingRequest $pendingRequest): void
     {
         $timestamp = (string) time();
-        $path = (string) parse_url($pendingRequest->getUrl(), PHP_URL_PATH);
+        $parsedUrlPath = parse_url($pendingRequest->getUrl(), PHP_URL_PATH);
+        $path = is_string($parsedUrlPath) ? $parsedUrlPath : '';
         $hash = hash_hmac('sha256', $path . '>|<' . $timestamp, $this->appSecret);
 
         $pendingRequest->headers()->add('Capi-Timestamp', $timestamp);

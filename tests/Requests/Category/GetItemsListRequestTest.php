@@ -32,4 +32,10 @@ class GetItemsListRequestTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         new GetItemsListRequest('../admin');
     }
+
+    public function test_it_rejects_string_category_with_invalid_characters_at_end(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new GetItemsListRequest('coins1');
+    }
 }

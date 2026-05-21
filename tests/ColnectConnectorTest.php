@@ -79,6 +79,18 @@ class ColnectConnectorTest extends TestCase
         new ColnectConnector('../evil', 'secret_abc', 'en');
     }
 
+    public function test_it_rejects_app_id_with_invalid_characters_at_end(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new ColnectConnector('app_123 ', 'secret_abc', 'en');
+    }
+
+    public function test_it_rejects_app_id_with_invalid_characters_at_start(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new ColnectConnector(' app_123', 'secret_abc', 'en');
+    }
+
     public function test_it_rejects_empty_app_secret(): void
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -89,6 +101,24 @@ class ColnectConnectorTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
         new ColnectConnector('app_123', 'secret_abc', '../../evil.com/x');
+    }
+
+    public function test_it_rejects_language_with_invalid_characters_at_start(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new ColnectConnector('app_123', 'secret_abc', '1en');
+    }
+
+    public function test_it_rejects_language_with_invalid_characters_at_end(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new ColnectConnector('app_123', 'secret_abc', 'en1');
+    }
+
+    public function test_it_rejects_language_with_region_and_invalid_characters(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new ColnectConnector('app_123', 'secret_abc', 'en_US1');
     }
 
     public function test_it_accepts_locale_with_region(): void
