@@ -48,10 +48,22 @@ class GlobalSearchRequestTest extends TestCase
         new GlobalSearchRequest('../stamps', 'blue');
     }
 
+    public function test_it_rejects_collectable_type_with_invalid_trailing_character(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new GlobalSearchRequest('stamps1', 'blue');
+    }
+
     public function test_it_rejects_empty_search_query(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         new GlobalSearchRequest('stamps', '');
+    }
+
+    public function test_it_accepts_page_one(): void
+    {
+        $request = new GlobalSearchRequest('stamps', 'blue', 1);
+        $this->assertEquals('/search/collectibles/stamps/q/blue/page/1', $request->resolveEndpoint());
     }
 
     public function test_it_rejects_non_positive_page(): void

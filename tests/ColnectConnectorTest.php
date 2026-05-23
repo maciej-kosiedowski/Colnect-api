@@ -73,10 +73,34 @@ class ColnectConnectorTest extends TestCase
         $this->assertEquals($expectedHash, $headers['Capi-Hash']);
     }
 
+    public function test_boot_throws_exception_if_url_path_is_unparseable(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Failed to parse the URL path.');
+
+        $connector = new ColnectConnector('app_123', 'secret_abc', 'en');
+
+        // parse_url may not return false easily in PHP 8+, but it CAN return null for PHP_URL_PATH
+        // if there's no path component, EXCEPT Saloon always ensures a base URL.
+        // To strictly cover the exception block, we can simulate `PendingRequest` having a URL that
+        // when parsed returns false or null for path. Since we are in PHPUnit, we can directly
+        // call the boot method with a mock PendingRequest.
+        $mockPendingRequest = $this->createMock(PendingRequest::class);
+        $mockPendingRequest->method('getUrl')->willReturn('http:///example.com:80');
+
+        $connector->boot($mockPendingRequest);
+    }
+
     public function test_it_rejects_app_id_with_slashes(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         new ColnectConnector('../evil', 'secret_abc', 'en');
+    }
+
+    public function test_it_rejects_app_id_with_invalid_trailing_character(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new ColnectConnector('app_123!', 'secret_abc', 'en');
     }
 
     public function test_it_rejects_empty_app_secret(): void
@@ -89,6 +113,18 @@ class ColnectConnectorTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
         new ColnectConnector('app_123', 'secret_abc', '../../evil.com/x');
+    }
+
+    public function test_it_rejects_language_with_invalid_leading_character(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new ColnectConnector('app_123', 'secret_abc', '1en');
+    }
+
+    public function test_it_rejects_language_with_invalid_trailing_character(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new ColnectConnector('app_123', 'secret_abc', 'enx');
     }
 
     public function test_it_accepts_locale_with_region(): void
