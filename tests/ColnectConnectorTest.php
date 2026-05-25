@@ -79,6 +79,12 @@ class ColnectConnectorTest extends TestCase
         new ColnectConnector('../evil', 'secret_abc', 'en');
     }
 
+    public function test_it_rejects_app_id_with_invalid_trailing_characters(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new ColnectConnector('app_123!', 'secret_abc', 'en');
+    }
+
     public function test_it_rejects_empty_app_secret(): void
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -89,6 +95,18 @@ class ColnectConnectorTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
         new ColnectConnector('app_123', 'secret_abc', '../../evil.com/x');
+    }
+
+    public function test_it_rejects_language_with_invalid_trailing_characters(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new ColnectConnector('app_123', 'secret_abc', 'en_US!');
+    }
+
+    public function test_it_rejects_language_with_invalid_leading_characters(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new ColnectConnector('app_123', 'secret_abc', '!en_US');
     }
 
     public function test_it_accepts_locale_with_region(): void
