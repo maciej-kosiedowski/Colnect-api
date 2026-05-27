@@ -79,6 +79,18 @@ class ColnectConnectorTest extends TestCase
         new ColnectConnector('../evil', 'secret_abc', 'en');
     }
 
+    public function test_it_rejects_app_id_with_invalid_prefix(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new ColnectConnector('!app123', 'secret_abc', 'en');
+    }
+
+    public function test_it_rejects_app_id_with_invalid_suffix(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new ColnectConnector('app123!', 'secret_abc', 'en');
+    }
+
     public function test_it_rejects_empty_app_secret(): void
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -91,10 +103,45 @@ class ColnectConnectorTest extends TestCase
         new ColnectConnector('app_123', 'secret_abc', '../../evil.com/x');
     }
 
+    public function test_it_rejects_language_with_invalid_prefix(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new ColnectConnector('app_123', 'secret_abc', ' en');
+    }
+
+    public function test_it_rejects_language_with_invalid_suffix(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new ColnectConnector('app_123', 'secret_abc', 'en ');
+    }
+
     public function test_it_accepts_locale_with_region(): void
     {
         $connector = new ColnectConnector('app_123', 'secret_abc', 'en_US');
 
         $this->assertEquals('https://api.colnect.net/en_US/api/app_123', $connector->resolveBaseUrl());
+    }
+
+    public function test_it_throws_exception_on_unparseable_url(): void
+    {
+        $connector = new class('app_123', 'secret_abc', 'en') extends ColnectConnector {
+            public function resolveBaseUrl(): string
+            {
+                return 'http:///example.com:80:80'; // Invalid URL to make parse_url return false
+            }
+        };
+
+        $request = new GetLanguagesRequest();
+
+        $mockClient = new MockClient([
+            GetLanguagesRequest::class => MockResponse::make(['success' => true]),
+        ]);
+
+        $connector->withMockClient($mockClient);
+
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Failed to parse the request URL path.');
+
+        $connector->send($request);
     }
 }
