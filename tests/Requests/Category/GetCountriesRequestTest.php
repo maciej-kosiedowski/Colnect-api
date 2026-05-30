@@ -32,4 +32,10 @@ class GetCountriesRequestTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         new GetCountriesRequest('../admin');
     }
+
+    public function test_it_rejects_trailing_newline(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new GetCountriesRequest("stamps\n");
+    }
 }

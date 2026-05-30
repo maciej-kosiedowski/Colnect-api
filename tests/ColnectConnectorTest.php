@@ -91,10 +91,46 @@ class ColnectConnectorTest extends TestCase
         new ColnectConnector('app_123', 'secret_abc', '../../evil.com/x');
     }
 
+    public function test_it_rejects_language_without_valid_start(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new ColnectConnector('app_123', 'secret_abc', '1en_US');
+    }
+
     public function test_it_accepts_locale_with_region(): void
     {
         $connector = new ColnectConnector('app_123', 'secret_abc', 'en_US');
 
         $this->assertEquals('https://api.colnect.net/en_US/api/app_123', $connector->resolveBaseUrl());
+    }
+
+    public function test_it_rejects_app_id_with_trailing_newline(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new ColnectConnector("app_123\n", 'secret_abc', 'en');
+    }
+
+    public function test_it_rejects_language_with_trailing_newline(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new ColnectConnector('app_123', 'secret_abc', "en\n");
+    }
+
+    public function test_it_throws_exception_on_invalid_url_parsing_directly(): void
+    {
+        $connector = new ColnectConnector('app_123', 'secret_abc', 'en');
+
+        $pendingRequestMock = $this->createMock(\Saloon\Http\PendingRequest::class);
+
+        // Zwraca url, którego parse_url nie zdoła przetworzyć: "http:///example.com" zwróci false dla hosta/path
+        // lub zmusimy go do błędu przy użyciu portu wykraczającego poza limit:
+        $pendingRequestMock->expects($this->once())
+            ->method('getUrl')
+            ->willReturn('http://colnect.net:100000/');
+
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Failed to parse URL path.');
+
+        @$connector->boot($pendingRequestMock); // Wołamy bezpośrednio testowaną logikę
     }
 }
