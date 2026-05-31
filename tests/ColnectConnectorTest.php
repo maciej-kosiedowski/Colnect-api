@@ -79,6 +79,24 @@ class ColnectConnectorTest extends TestCase
         new ColnectConnector('../evil', 'secret_abc', 'en');
     }
 
+    public function test_it_rejects_app_id_with_invalid_prefix(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new ColnectConnector('!app_123', 'secret_abc', 'en');
+    }
+
+    public function test_it_rejects_app_id_with_invalid_suffix(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new ColnectConnector('app_123!', 'secret_abc', 'en');
+    }
+
+    public function test_it_rejects_app_id_with_trailing_newline(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new ColnectConnector("app_123\n", 'secret_abc', 'en');
+    }
+
     public function test_it_rejects_empty_app_secret(): void
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -89,6 +107,47 @@ class ColnectConnectorTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
         new ColnectConnector('app_123', 'secret_abc', '../../evil.com/x');
+    }
+
+    public function test_it_rejects_language_with_invalid_prefix(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new ColnectConnector('app_123', 'secret_abc', '!en');
+    }
+
+    public function test_it_rejects_language_with_invalid_suffix(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new ColnectConnector('app_123', 'secret_abc', 'en!');
+    }
+
+    public function test_it_rejects_language_with_trailing_newline(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new ColnectConnector('app_123', 'secret_abc', "en\n");
+    }
+
+    public function test_it_rejects_unparseable_url_in_boot(): void
+    {
+        $connector = new class ('app_123', 'secret_abc', 'en') extends ColnectConnector {
+            public function resolveBaseUrl(): string
+            {
+                return 'http://:80'; // Invalid URL to make parse_url fail
+            }
+        };
+
+        $request = new \Vendor\ColnectApi\Requests\General\GetLanguagesRequest();
+
+        $mockClient = new \Saloon\Http\Faking\MockClient([
+            \Vendor\ColnectApi\Requests\General\GetLanguagesRequest::class => \Saloon\Http\Faking\MockResponse::make(['success' => true]),
+        ]);
+
+        $connector->withMockClient($mockClient);
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid URL provided.');
+
+        $connector->send($request);
     }
 
     public function test_it_accepts_locale_with_region(): void
