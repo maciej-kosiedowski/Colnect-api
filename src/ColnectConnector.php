@@ -36,7 +36,7 @@ class ColnectConnector extends Connector
      */
     public function __construct(string $appId, string $appSecret, string $language = 'en')
     {
-        if (preg_match('/^[A-Za-z0-9_-]+$/', $appId) !== 1) {
+        if (preg_match('/^[A-Za-z0-9_-]+$/D', $appId) !== 1) {
             throw new \InvalidArgumentException('App ID must contain only letters, digits, underscores or hyphens.');
         }
 
@@ -44,7 +44,7 @@ class ColnectConnector extends Connector
             throw new \InvalidArgumentException('App secret must not be empty.');
         }
 
-        if (preg_match('/^[a-z]{2}(_[A-Z]{2})?$/', $language) !== 1) {
+        if (preg_match('/^[a-z]{2}(_[A-Z]{2})?$/D', $language) !== 1) {
             throw new \InvalidArgumentException('Language must be a 2-letter code, optionally with a region (e.g. "en" or "en_US").');
         }
 
@@ -86,7 +86,10 @@ class ColnectConnector extends Connector
     public function boot(PendingRequest $pendingRequest): void
     {
         $timestamp = (string) time();
-        $path = (string) parse_url($pendingRequest->getUrl(), PHP_URL_PATH);
+        $path = parse_url($pendingRequest->getUrl(), PHP_URL_PATH);
+        if (!is_string($path)) {
+            $path = '';
+        }
         $hash = hash_hmac('sha256', $path . '>|<' . $timestamp, $this->appSecret);
 
         $pendingRequest->headers()->add('Capi-Timestamp', $timestamp);
