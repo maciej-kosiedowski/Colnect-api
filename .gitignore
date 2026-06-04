@@ -1,3 +1,5 @@
 vendor/
 .phpunit.cache/
+build/
+infection.log
 /build/
