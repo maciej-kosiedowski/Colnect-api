@@ -1,3 +1,4 @@
+# PHPStan Level 9 configuration for strict analysis
 parameters:
     level: 9
     paths:
