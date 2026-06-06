@@ -3,8 +3,13 @@
     "source": {
         "directories": [
             "src"
+        ],
+        "excludes": [
+            "Enums"
         ]
     },
+    "minMsi": 100,
+    "minCoveredMsi": 100,
     "mutators": {
         "@default": true
     }
