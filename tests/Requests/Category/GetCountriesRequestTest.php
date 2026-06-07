@@ -32,4 +32,22 @@ class GetCountriesRequestTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         new GetCountriesRequest('../admin');
     }
+
+    public function test_it_rejects_string_category_with_prefix_mismatch(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new GetCountriesRequest('!stamps');
+    }
+
+    public function test_it_rejects_string_category_with_suffix_mismatch(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new GetCountriesRequest('stamps!');
+    }
+
+    public function test_it_rejects_string_category_with_trailing_newline(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new GetCountriesRequest("stamps\n");
+    }
 }

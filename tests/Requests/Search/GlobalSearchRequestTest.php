@@ -48,6 +48,24 @@ class GlobalSearchRequestTest extends TestCase
         new GlobalSearchRequest('../stamps', 'blue');
     }
 
+    public function test_it_rejects_invalid_collectable_type_with_prefix_mismatch(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new GlobalSearchRequest('!stamps', 'blue');
+    }
+
+    public function test_it_rejects_invalid_collectable_type_with_suffix_mismatch(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new GlobalSearchRequest('stamps!', 'blue');
+    }
+
+    public function test_it_rejects_invalid_collectable_type_with_trailing_newline(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new GlobalSearchRequest("stamps\n", 'blue');
+    }
+
     public function test_it_rejects_empty_search_query(): void
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -58,5 +76,11 @@ class GlobalSearchRequestTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
         new GlobalSearchRequest('stamps', 'blue', 0);
+    }
+
+    public function test_it_accepts_positive_page_boundary(): void
+    {
+        $request = new GlobalSearchRequest('stamps', 'blue', 1);
+        $this->assertEquals('/search/collectibles/stamps/q/blue/page/1', $request->resolveEndpoint());
     }
 }
