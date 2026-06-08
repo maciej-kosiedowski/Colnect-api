@@ -32,4 +32,16 @@ class GetCountriesRequestTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         new GetCountriesRequest('../admin');
     }
+
+    public function test_it_rejects_string_category_with_trailing_newline(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new GetCountriesRequest("stamps\n");
+    }
+
+    public function test_it_rejects_string_category_with_leading_special_chars(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new GetCountriesRequest("!stamps");
+    }
 }
