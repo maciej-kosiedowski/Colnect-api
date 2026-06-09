@@ -1,3 +1,4 @@
+# PHPStan Level 9 Configuration
 parameters:
     level: 9
     paths:
