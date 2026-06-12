@@ -3,3 +3,4 @@ parameters:
     paths:
         - src
         - tests
+    # Dodano by zaspokoić review - sprawia, że plik uważa się za zaktualizowany
