@@ -71,12 +71,46 @@ class ColnectConnectorTest extends TestCase
         $expectedHash = hash_hmac('sha256', $path . '>|<' . $sentTimestamp, 'secret_abc');
 
         $this->assertEquals($expectedHash, $headers['Capi-Hash']);
+
+        // Assert that hash structure has not been mutated
+        $invalidHash1 = hash_hmac('sha256', '>|<' . $path . $sentTimestamp, 'secret_abc');
+        $this->assertNotEquals($invalidHash1, $headers['Capi-Hash']);
+
+        $invalidHash2 = hash_hmac('sha256', '>|<' . $sentTimestamp, 'secret_abc');
+        $this->assertNotEquals($invalidHash2, $headers['Capi-Hash']);
+
+        $invalidHash3 = hash_hmac('sha256', $path . $sentTimestamp, 'secret_abc');
+        $this->assertNotEquals($invalidHash3, $headers['Capi-Hash']);
+
+        $invalidHash4 = hash_hmac('sha256', $path . $sentTimestamp . '>|<', 'secret_abc');
+        $this->assertNotEquals($invalidHash4, $headers['Capi-Hash']);
+
+        $invalidHash5 = hash_hmac('sha256', $path . '>|<', 'secret_abc');
+        $this->assertNotEquals($invalidHash5, $headers['Capi-Hash']);
     }
 
     public function test_it_rejects_app_id_with_slashes(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         new ColnectConnector('../evil', 'secret_abc', 'en');
+    }
+
+    public function test_it_rejects_app_id_with_invalid_prefix(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new ColnectConnector('!app_123', 'secret_abc', 'en');
+    }
+
+    public function test_it_rejects_app_id_with_invalid_suffix(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new ColnectConnector('app_123!', 'secret_abc', 'en');
+    }
+
+    public function test_it_rejects_app_id_with_trailing_newline(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new ColnectConnector("app_123\n", 'secret_abc', 'en');
     }
 
     public function test_it_rejects_empty_app_secret(): void
@@ -89,6 +123,24 @@ class ColnectConnectorTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
         new ColnectConnector('app_123', 'secret_abc', '../../evil.com/x');
+    }
+
+    public function test_it_rejects_language_with_invalid_prefix(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new ColnectConnector('app_123', 'secret_abc', '!en');
+    }
+
+    public function test_it_rejects_language_with_invalid_suffix(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new ColnectConnector('app_123', 'secret_abc', 'en!');
+    }
+
+    public function test_it_rejects_language_with_trailing_newline(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new ColnectConnector('app_123', 'secret_abc', "en\n");
     }
 
     public function test_it_accepts_locale_with_region(): void
