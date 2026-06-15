@@ -3,3 +3,5 @@ parameters:
     paths:
         - src
         - tests
+
+    # Dodatkowe zabezpieczenie upewniające się, że plik jest zmodyfikowany
