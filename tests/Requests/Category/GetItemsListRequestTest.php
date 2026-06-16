@@ -32,4 +32,22 @@ class GetItemsListRequestTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         new GetItemsListRequest('../admin');
     }
+
+    public function test_it_rejects_string_category_with_newline(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new GetItemsListRequest("stamps\n");
+    }
+
+    public function test_it_rejects_string_category_with_invalid_prefix(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new GetItemsListRequest('!stamps');
+    }
+
+    public function test_it_rejects_string_category_with_invalid_suffix(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new GetItemsListRequest('stamps!');
+    }
 }
