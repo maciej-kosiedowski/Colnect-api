@@ -29,7 +29,7 @@ class GetItemsListRequest extends Request
      */
     public function __construct(CategoryType|string $category)
     {
-        if (is_string($category) && preg_match('/^[a-z_]+$/D', $category) !== 1) {
+        if (is_string($category) && preg_match('/^[a-z_]+$/', $category) !== 1) {
             throw new \InvalidArgumentException('Category must contain only lowercase letters and underscores.');
         }
 
