@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Vendor\ColnectApi\Tests;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
@@ -89,6 +90,42 @@ class ColnectConnectorTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
         new ColnectConnector('app_123', 'secret_abc', '../../evil.com/x');
+    }
+
+    public function test_it_rejects_app_id_with_trailing_newline(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new ColnectConnector("app_123\n", 'secret_abc', 'en');
+    }
+
+    public function test_it_rejects_app_id_with_invalid_prefix(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new ColnectConnector('!app_123', 'secret_abc', 'en');
+    }
+
+    public function test_it_rejects_language_with_trailing_newline(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new ColnectConnector('app_123', 'secret_abc', "en\n");
+    }
+
+    public function test_it_rejects_language_with_invalid_prefix(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new ColnectConnector('app_123', 'secret_abc', '!en');
+    }
+
+    public function test_boot_throws_on_unparseable_url(): void
+    {
+        $connector = new ColnectConnector('app_123', 'secret_abc', 'en');
+
+        /** @var PendingRequest&MockObject $pendingRequest */
+        $pendingRequest = $this->createMock(PendingRequest::class);
+        $pendingRequest->method('getUrl')->willReturn('http://[::1');
+
+        $this->expectException(\InvalidArgumentException::class);
+        $connector->boot($pendingRequest);
     }
 
     public function test_it_accepts_locale_with_region(): void
