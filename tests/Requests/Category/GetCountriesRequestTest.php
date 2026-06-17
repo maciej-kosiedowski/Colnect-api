@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Vendor\ColnectApi\Tests\Requests\Category;
+namespace Slimad\ColnectApi\Tests\Requests\Category;
 
 use PHPUnit\Framework\TestCase;
 use Saloon\Enums\Method;
-use Vendor\ColnectApi\Enums\CategoryType;
-use Vendor\ColnectApi\Requests\Category\GetCountriesRequest;
+use Slimad\ColnectApi\Enums\CategoryType;
+use Slimad\ColnectApi\Requests\Category\GetCountriesRequest;
 
 class GetCountriesRequestTest extends TestCase
 {

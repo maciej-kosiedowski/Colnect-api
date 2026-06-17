@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Vendor\ColnectApi\Requests\Search;
+namespace Slimad\ColnectApi\Requests\Search;
 
 use Saloon\Enums\Method;
 use Saloon\Http\Request;

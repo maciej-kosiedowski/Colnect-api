@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Vendor\ColnectApi\Tests\Requests\General;
+namespace Slimad\ColnectApi\Tests\Requests\General;
 
 use PHPUnit\Framework\TestCase;
 use Saloon\Enums\Method;
-use Vendor\ColnectApi\Requests\General\GetCategoriesRequest;
+use Slimad\ColnectApi\Requests\General\GetCategoriesRequest;
 
 class GetCategoriesRequestTest extends TestCase
 {

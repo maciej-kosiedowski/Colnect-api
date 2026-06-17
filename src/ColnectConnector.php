@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Vendor\ColnectApi;
+namespace Slimad\ColnectApi;
 
 use Saloon\Http\Connector;
 use Saloon\Http\PendingRequest;
