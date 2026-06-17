@@ -40,7 +40,7 @@ class GlobalSearchRequest extends Request
      */
     public function __construct(string $collectableType, string $searchQuery, ?int $page = null)
     {
-        if (preg_match('/^[a-z_]+$/', $collectableType) !== 1) {
+        if (preg_match('/^[a-z_]+$/D', $collectableType) !== 1) {
             throw new \InvalidArgumentException('Collectable type must contain only lowercase letters and underscores.');
         }
 
