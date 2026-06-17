@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Vendor\ColnectApi\Enums;
+namespace Slimad\ColnectApi\Enums;
 
 enum CategoryType: string
 {

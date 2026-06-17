@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Vendor\ColnectApi\Tests;
+namespace Slimad\ColnectApi\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Http\PendingRequest;
-use Vendor\ColnectApi\ColnectConnector;
-use Vendor\ColnectApi\Requests\General\GetLanguagesRequest;
+use Slimad\ColnectApi\ColnectConnector;
+use Slimad\ColnectApi\Requests\General\GetLanguagesRequest;
 
 class ColnectConnectorTest extends TestCase
 {

@@ -1,7 +1,8 @@
 {
-    "name": "vendor/colnect-api",
+    "name": "slimad/colnect-api",
     "description": "A lightweight Saloon SDK for the Colnect API",
     "type": "library",
+    "license": "MIT",
     "require": {
         "php": "^8.2",
         "saloonphp/saloon": "^3.0"
@@ -14,12 +15,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Vendor\\ColnectApi\\": "src/"
+            "Slimad\\ColnectApi\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Vendor\\ColnectApi\\Tests\\": "tests/"
+            "Slimad\\ColnectApi\\Tests\\": "tests/"
         }
     },
     "minimum-stability": "stable",

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Vendor\ColnectApi\Tests\Requests\General;
+namespace Slimad\ColnectApi\Tests\Requests\General;
 
 use PHPUnit\Framework\TestCase;
 use Saloon\Enums\Method;
-use Vendor\ColnectApi\Requests\General\GetLanguagesRequest;
+use Slimad\ColnectApi\Requests\General\GetLanguagesRequest;
 
 class GetLanguagesRequestTest extends TestCase
 {
