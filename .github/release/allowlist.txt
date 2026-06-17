@@ -1,0 +1,39 @@
+# Release allowlist ("wishlist") for the public Colnect-API-Client package.
+#
+# Every path listed here is copied — as a snapshot — into the public repository
+# on each release. Anything NOT listed here never leaves this private repo, so
+# this is an allowlist (default-deny), which is the safer model for publishing.
+#
+# Rules:
+#   * One path per line, relative to the repository root.
+#   * A path may be a file or a directory (directories are copied recursively).
+#   * Blank lines and lines beginning with '#' are ignored.
+#   * Absolute paths and '..' are rejected by the publisher.
+#
+# Deliberately EXCLUDED — do NOT add these unless you really mean to publish them:
+#   README.md                          -> the public repo keeps its OWN README
+#   composer.lock                      -> libraries should not ship a lock file
+#   .github/workflows/release.yml      -> the private publishing machinery
+#   .github/workflows/secrets-check.yml-> private CI; runs on the source repo
+#   .github/release/                   -> this allowlist + publisher live here
+#   .github/dependabot.yml             -> dependency PRs belong on the source repo
+#   build/, vendor/                    -> generated / installed artifacts
+
+# --- library code ---
+src
+
+# --- test suite ---
+tests
+
+# --- package manifest & license ---
+composer.json
+LICENSE
+
+# --- developer tooling / quality configuration ---
+.gitignore
+phpstan.neon
+phpunit.xml
+infection.json.dist
+
+# --- public CI (runs the test suite against the published code) ---
+.github/workflows/tests.yml
