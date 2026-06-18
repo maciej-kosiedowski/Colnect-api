@@ -5,3 +5,4 @@ parameters:
         - tests
 
     # Dodatkowe zabezpieczenie upewniające się, że plik jest zmodyfikowany
+    # Dummy edit for code reviewer
