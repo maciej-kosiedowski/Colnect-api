@@ -29,14 +29,17 @@ jobs:
       - name: Execute tests
         env:
           COMPOSER_HOME: /tmp/composer
+          COMPOSER_ALLOW_SUPERUSER: 1
         run: composer test
 
       - name: Static Analysis
         env:
           COMPOSER_HOME: /tmp/composer
+          COMPOSER_ALLOW_SUPERUSER: 1
         run: composer analyse
 
       - name: Mutation Testing
         env:
           COMPOSER_HOME: /tmp/composer
+          COMPOSER_ALLOW_SUPERUSER: 1
         run: composer mutate
