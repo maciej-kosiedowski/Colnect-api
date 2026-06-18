@@ -27,10 +27,16 @@ jobs:
         run: composer install --prefer-dist --no-interaction
 
       - name: Execute tests
+        env:
+          COMPOSER_HOME: /tmp/composer
         run: composer test
 
       - name: Static Analysis
+        env:
+          COMPOSER_HOME: /tmp/composer
         run: composer analyse
 
       - name: Mutation Testing
+        env:
+          COMPOSER_HOME: /tmp/composer
         run: composer mutate
