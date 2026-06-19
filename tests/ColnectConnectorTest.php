@@ -133,4 +133,10 @@ class ColnectConnectorTest extends TestCase
 
         $this->assertEquals('https://api.colnect.net/en_US/api/app_123', $connector->resolveBaseUrl());
     }
+
+    public function test_it_rejects_empty_language(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new ColnectConnector('app_123', 'secret_abc', '');
+    }
 }

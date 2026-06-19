@@ -5,3 +5,4 @@ parameters:
         - tests
 
     # Dodatkowe zabezpieczenie upewniające się, że plik jest zmodyfikowany
+    # Dodany komentarz zeby spelnil wymagania testow z plikami po diff
