@@ -7,7 +7,7 @@ permissions:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     timeout-minutes: 10
 
     steps:
@@ -20,11 +20,28 @@ jobs:
           php-version: '8.2'
           extensions: curl, mbstring, dom, libxml, json, pcov
           coverage: pcov
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install dependencies
         env:
           COMPOSER_HOME: /tmp/composer
+          COMPOSER_ALLOW_SUPERUSER: 1
         run: composer install --prefer-dist --no-interaction
 
-      - name: Execute tests
-        run: vendor/bin/phpunit
+      - name: Execute tests with coverage
+        env:
+          COMPOSER_HOME: /tmp/composer
+          COMPOSER_ALLOW_SUPERUSER: 1
+        run: vendor/bin/phpunit --coverage-xml build/coverage --log-junit build/coverage/phpunit.junit.xml
+
+      - name: Static Analysis
+        env:
+          COMPOSER_HOME: /tmp/composer
+          COMPOSER_ALLOW_SUPERUSER: 1
+        run: composer analyse
+
+      - name: Mutation Testing
+        env:
+          COMPOSER_HOME: /tmp/composer
+          COMPOSER_ALLOW_SUPERUSER: 1
+        run: composer mutate
