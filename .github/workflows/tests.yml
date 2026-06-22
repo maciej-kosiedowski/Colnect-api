@@ -20,17 +20,19 @@ jobs:
           php-version: '8.2'
           extensions: curl, mbstring, dom, libxml, json, pcov
           coverage: pcov
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install dependencies
         env:
           COMPOSER_HOME: /tmp/composer
+          COMPOSER_ALLOW_SUPERUSER: 1
         run: composer install --prefer-dist --no-interaction
 
-      - name: Execute tests
+      - name: Execute tests with coverage
         env:
           COMPOSER_HOME: /tmp/composer
           COMPOSER_ALLOW_SUPERUSER: 1
-        run: composer test
+        run: vendor/bin/phpunit --coverage-xml build/coverage --log-junit build/coverage/phpunit.junit.xml
 
       - name: Static Analysis
         env:

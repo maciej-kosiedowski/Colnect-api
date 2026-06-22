@@ -12,7 +12,6 @@
         "infection/infection": "^0.29",
         "ext-pcov": "*"
     },
-
     "autoload": {
         "psr-4": {
             "Vendor\\ColnectApi\\": "src/"
