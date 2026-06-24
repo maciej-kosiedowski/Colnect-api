@@ -71,6 +71,19 @@ class ColnectConnectorTest extends TestCase
         $expectedHash = hash_hmac('sha256', $path . '>|<' . $sentTimestamp, 'secret_abc');
 
         $this->assertEquals($expectedHash, $headers['Capi-Hash']);
+
+        // Explicitly assert positional structure to prevent Concat mutants
+        $this->assertNotEquals(
+            hash_hmac('sha256', $sentTimestamp . '>|<' . $path, 'secret_abc'),
+            $headers['Capi-Hash'],
+            'Hash should fail if path and timestamp are swapped'
+        );
+
+        $this->assertNotEquals(
+            hash_hmac('sha256', $path . $sentTimestamp, 'secret_abc'),
+            $headers['Capi-Hash'],
+            'Hash should fail if separator is removed'
+        );
     }
 
     public function test_it_rejects_app_id_with_slashes(): void
