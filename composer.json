@@ -24,6 +24,7 @@
     },
     "minimum-stability": "stable",
     "prefer-stable": true,
+    "license": "MIT",
     "config": {
         "audit": {
             "block-insecure": true
@@ -36,8 +37,8 @@
         }
     },
     "scripts": {
-        "test": "vendor/bin/phpunit",
+        "test": "php -d pcov.enabled=1 vendor/bin/phpunit --coverage-xml=build/coverage/coverage-xml --log-junit=build/coverage/phpunit.junit.xml",
         "analyse": "vendor/bin/phpstan analyse src tests --level 9",
-        "mutate": "vendor/bin/infection --show-mutations --coverage=build/coverage"
+        "mutate": "php -d pcov.enabled=1 vendor/bin/infection --show-mutations --coverage=build/coverage"
     }
 }
