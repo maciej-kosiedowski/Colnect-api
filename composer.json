@@ -2,6 +2,7 @@
     "name": "vendor/colnect-api",
     "description": "A lightweight Saloon SDK for the Colnect API",
     "type": "library",
+    "license": "MIT",
     "require": {
         "php": "^8.2",
         "saloonphp/saloon": "^3.0"
