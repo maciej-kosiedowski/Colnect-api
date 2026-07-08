@@ -71,6 +71,25 @@ class ColnectConnectorTest extends TestCase
         $expectedHash = hash_hmac('sha256', $path . '>|<' . $sentTimestamp, 'secret_abc');
 
         $this->assertEquals($expectedHash, $headers['Capi-Hash']);
+
+        // Explicitly assert that removing or swapping elements in the concatenated string produces a different hash,
+        // which prevents Concat and ConcatOperandRemoval mutants from escaping.
+        $this->assertNotEquals(
+            hash_hmac('sha256', $sentTimestamp . '>|<' . $path, 'secret_abc'),
+            $headers['Capi-Hash']
+        );
+        $this->assertNotEquals(
+            hash_hmac('sha256', $path . $sentTimestamp, 'secret_abc'),
+            $headers['Capi-Hash']
+        );
+        $this->assertNotEquals(
+            hash_hmac('sha256', $path, 'secret_abc'),
+            $headers['Capi-Hash']
+        );
+        $this->assertNotEquals(
+            hash_hmac('sha256', $sentTimestamp, 'secret_abc'),
+            $headers['Capi-Hash']
+        );
     }
 
     public function test_it_rejects_app_id_with_slashes(): void
