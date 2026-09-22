@@ -4,47 +4,36 @@ declare(strict_types=1);
 
 namespace Slimad\ColnectApi\Requests\Category;
 
-use Saloon\Enums\Method;
-use Saloon\Http\Request;
-use Slimad\ColnectApi\Enums\CategoryType;
+use Slimad\ColnectApi\Requests\CategoryRequest;
 
-class GetItemsListRequest extends Request
+/**
+ * List of items and their info. Filters are mandatory.
+ *
+ * GET /list/cat/{category}/{filters}
+ *
+ * Returns [item_id, series_id, producer_id, front_picture_id, back_picture_id,
+ * item_description, catalog_codes, item_name]. Use Filters::sort() to change
+ * the ordering, see GetCategorySortOptionsRequest for the available names.
+ */
+class GetItemsListRequest extends CategoryRequest
 {
     /**
-     * The HTTP method of the request
-     *
-     * @var Method
-     */
-    protected Method $method = Method::GET;
-
-    /**
-     * @var CategoryType|string
-     */
-    protected CategoryType|string $category;
-
-    /**
-     * @param CategoryType|string $category
-     *
-     * @throws \InvalidArgumentException When a string category contains unexpected characters.
-     */
-    public function __construct(CategoryType|string $category)
-    {
-        if (is_string($category) && preg_match('/^[a-z_]+$/D', $category) !== 1) {
-            throw new \InvalidArgumentException('Category must contain only lowercase letters and underscores.');
-        }
-
-        $this->category = $category;
-    }
-
-    /**
-     * The endpoint for the request
+     * The CAPI action this request performs.
      *
      * @return string
      */
-    public function resolveEndpoint(): string
+    protected function action(): string
     {
-        $categoryValue = $this->category instanceof CategoryType ? $this->category->value : $this->category;
+        return 'list';
+    }
 
-        return '/items/cat/' . rawurlencode($categoryValue);
+    /**
+     * Whether CAPI rejects this action when no filter is given.
+     *
+     * @return bool
+     */
+    protected function requiresFilters(): bool
+    {
+        return true;
     }
 }
