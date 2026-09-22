@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Vendor\ColnectApi\Tests\Requests\Search;
+namespace Slimad\ColnectApi\Tests\Requests\Search;
 
 use PHPUnit\Framework\TestCase;
 use Saloon\Enums\Method;
-use Vendor\ColnectApi\Requests\Search\GlobalSearchRequest;
+use Slimad\ColnectApi\Requests\Search\GlobalSearchRequest;
 
 class GlobalSearchRequestTest extends TestCase
 {

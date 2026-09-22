@@ -3,7 +3,7 @@
 A lightweight, fully typed PHP SDK for the [Colnect](https://colnect.com) REST API, built on top of [Saloon v3](https://docs.saloon.dev). It ships with first-class support for HMAC request signing, request mocking, PHPStan level 9 static analysis and mutation testing via Infection.
 
 [![Tests](https://github.com/maciej-kosiedowski/Colnect-api/actions/workflows/tests.yml/badge.svg)](https://github.com/maciej-kosiedowski/Colnect-api/actions/workflows/tests.yml)
-[![PHP Version](https://img.shields.io/badge/php-%5E8.2-8892BF.svg)](https://www.php.net/)
+[![PHP Version](https://img.shields.io/badge/php-8.2%20%7C%208.3%20%7C%208.4-8892BF.svg)](https://www.php.net/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![PHPStan Level](https://img.shields.io/badge/PHPStan-level%209-brightgreen.svg)](phpstan.neon)
 
@@ -49,7 +49,7 @@ A lightweight, fully typed PHP SDK for the [Colnect](https://colnect.com) REST A
 
 | Component        | Version                |
 | ---------------- | ---------------------- |
-| PHP              | `^8.2`                 |
+| PHP              | `^8.2` (tested on 8.2, 8.3 and 8.4) |
 | saloonphp/saloon | `^3.0`                 |
 | ext-pcov         | dev only (for Infection coverage) |
 
@@ -58,10 +58,10 @@ A lightweight, fully typed PHP SDK for the [Colnect](https://colnect.com) REST A
 Install the package via Composer:
 
 ```bash
-composer require vendor/colnect-api
+composer require slimad/colnect-api
 ```
 
-> Replace `vendor/colnect-api` with the actual Packagist name once the package is published. The autoload root is `Vendor\ColnectApi\` and maps to `src/`.
+> The package is distributed under the `slimad/colnect-api` name. The autoload root is `Slimad\ColnectApi\` and maps to `src/`.
 
 ## Quick start
 
@@ -70,11 +70,11 @@ composer require vendor/colnect-api
 
 require __DIR__ . '/vendor/autoload.php';
 
-use Vendor\ColnectApi\ColnectConnector;
-use Vendor\ColnectApi\Enums\CategoryType;
-use Vendor\ColnectApi\Requests\Category\GetCountriesRequest;
-use Vendor\ColnectApi\Requests\General\GetCategoriesRequest;
-use Vendor\ColnectApi\Requests\Search\GlobalSearchRequest;
+use Slimad\ColnectApi\ColnectConnector;
+use Slimad\ColnectApi\Enums\CategoryType;
+use Slimad\ColnectApi\Requests\Category\GetCountriesRequest;
+use Slimad\ColnectApi\Requests\General\GetCategoriesRequest;
+use Slimad\ColnectApi\Requests\Search\GlobalSearchRequest;
 
 $connector = new ColnectConnector(
     appId:     getenv('COLNECT_APP_ID'),
@@ -121,11 +121,11 @@ $connector = new ColnectConnector(
 
 | Namespace                                    | Class                       | Endpoint                                          |
 | -------------------------------------------- | --------------------------- | ------------------------------------------------- |
-| `Vendor\ColnectApi\Requests\General`         | `GetCategoriesRequest`      | `GET /categories`                                 |
-| `Vendor\ColnectApi\Requests\General`         | `GetLanguagesRequest`       | `GET /languages`                                  |
-| `Vendor\ColnectApi\Requests\Category`        | `GetCountriesRequest`       | `GET /countries/cat/{category}`                   |
-| `Vendor\ColnectApi\Requests\Category`        | `GetItemsListRequest`       | `GET /items/cat/{category}`                       |
-| `Vendor\ColnectApi\Requests\Search`          | `GlobalSearchRequest`       | `GET /search/collectibles/{type}/q/{query}[/page/{n}]` |
+| `Slimad\ColnectApi\Requests\General`         | `GetCategoriesRequest`      | `GET /categories`                                 |
+| `Slimad\ColnectApi\Requests\General`         | `GetLanguagesRequest`       | `GET /languages`                                  |
+| `Slimad\ColnectApi\Requests\Category`        | `GetCountriesRequest`       | `GET /countries/cat/{category}`                   |
+| `Slimad\ColnectApi\Requests\Category`        | `GetItemsListRequest`       | `GET /items/cat/{category}`                       |
+| `Slimad\ColnectApi\Requests\Search`          | `GlobalSearchRequest`       | `GET /search/collectibles/{type}/q/{query}[/page/{n}]` |
 
 All request classes follow the same pattern:
 
@@ -143,7 +143,7 @@ $status = $response->status(); // int
 The `CategoryType` enum provides a typed list of all collectable categories supported by Colnect:
 
 ```php
-use Vendor\ColnectApi\Enums\CategoryType;
+use Slimad\ColnectApi\Enums\CategoryType;
 
 CategoryType::Coins;       // 'coins'
 CategoryType::Stamps;      // 'stamps'
@@ -166,8 +166,8 @@ Because the SDK is built on Saloon, you can mock every response without hitting 
 ```php
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
-use Vendor\ColnectApi\ColnectConnector;
-use Vendor\ColnectApi\Requests\General\GetLanguagesRequest;
+use Slimad\ColnectApi\ColnectConnector;
+use Slimad\ColnectApi\Requests\General\GetLanguagesRequest;
 
 $mockClient = new MockClient([
     GetLanguagesRequest::class => MockResponse::make([
@@ -249,7 +249,7 @@ Pin a major version in your `composer.json` to avoid unexpected breaking changes
 ```json
 {
     "require": {
-        "vendor/colnect-api": "^1.0"
+        "slimad/colnect-api": "^1.0"
     }
 }
 ```

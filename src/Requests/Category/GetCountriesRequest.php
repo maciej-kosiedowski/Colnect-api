@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Vendor\ColnectApi\Requests\Category;
+namespace Slimad\ColnectApi\Requests\Category;
 
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
-use Vendor\ColnectApi\Enums\CategoryType;
+use Slimad\ColnectApi\Enums\CategoryType;
 
 class GetCountriesRequest extends Request
 {
