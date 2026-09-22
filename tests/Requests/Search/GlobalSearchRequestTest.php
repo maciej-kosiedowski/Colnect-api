@@ -6,6 +6,7 @@ namespace Slimad\ColnectApi\Tests\Requests\Search;
 
 use PHPUnit\Framework\TestCase;
 use Saloon\Enums\Method;
+use Slimad\ColnectApi\Enums\CategoryType;
 use Slimad\ColnectApi\Requests\Search\GlobalSearchRequest;
 
 class GlobalSearchRequestTest extends TestCase
@@ -16,6 +17,27 @@ class GlobalSearchRequestTest extends TestCase
 
         $this->assertEquals(Method::GET, $request->getMethod());
         $this->assertEquals('/search/collectibles/stamps/q/blue', $request->resolveEndpoint());
+    }
+
+    public function test_it_resolves_endpoint_with_a_category_enum(): void
+    {
+        $request = new GlobalSearchRequest(CategoryType::Stamps, 'blue');
+
+        $this->assertEquals('/search/collectibles/stamps/q/blue', $request->resolveEndpoint());
+    }
+
+    public function test_it_searches_every_category_when_no_type_is_given(): void
+    {
+        $request = new GlobalSearchRequest(null, 'blue');
+
+        $this->assertEquals('/search/q/blue', $request->resolveEndpoint());
+    }
+
+    public function test_it_searches_collectors(): void
+    {
+        $request = new GlobalSearchRequest(GlobalSearchRequest::COLLECTORS, 'maciej');
+
+        $this->assertEquals('/search/collectibles/collectors/q/maciej', $request->resolveEndpoint());
     }
 
     public function test_it_resolves_endpoint_with_page(): void
