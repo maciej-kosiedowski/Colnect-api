@@ -30,26 +30,12 @@ class ImageSearchRequest extends Request implements HasBody
 {
     use HasMultipartBody;
 
-    /**
-     * The HTTP method of the request
-     *
-     * @var Method
-     */
     protected Method $method = Method::POST;
 
-    /**
-     * @var ImageSearchTarget
-     */
     protected ImageSearchTarget $target;
 
-    /**
-     * @var string|null
-     */
     protected ?string $category;
 
-    /**
-     * @var Filters
-     */
     protected Filters $filters;
 
     /**
@@ -69,11 +55,6 @@ class ImageSearchRequest extends Request implements HasBody
         $this->filters = $filters ?? new Filters();
     }
 
-    /**
-     * The endpoint for the request
-     *
-     * @return string
-     */
     public function resolveEndpoint(): string
     {
         $endpoint = '/image_search';
@@ -86,8 +67,6 @@ class ImageSearchRequest extends Request implements HasBody
     }
 
     /**
-     * Default body
-     *
      * @return array<int, MultipartValue>
      */
     protected function defaultBody(): array

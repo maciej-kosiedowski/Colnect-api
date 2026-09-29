@@ -19,9 +19,6 @@ final class Str
      * This is a port of the urlize() function from the CAPI specification:
      * HTML entities are decoded, invalid characters are stripped and any
      * sequence of whitespace collapses into a single underscore.
-     *
-     * @param string $value
-     * @return string
      */
     public static function urlize(string $value): string
     {

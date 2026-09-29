@@ -20,15 +20,10 @@ use Slimad\ColnectApi\Support\Guard;
  */
 class GetProducersRequest extends CategoryRequest
 {
-    /**
-     * @var string
-     */
     protected string $country;
 
     /**
-     * @param CategoryType|string $category
      * @param int|string $country Mandatory country ID.
-     * @param Filters|null $filters
      *
      * @throws \Slimad\ColnectApi\Exceptions\InvalidArgumentException When the category or country is malformed.
      */
@@ -39,21 +34,11 @@ class GetProducersRequest extends CategoryRequest
         parent::__construct($category, $filters);
     }
 
-    /**
-     * The CAPI action this request performs.
-     *
-     * @return string
-     */
     protected function action(): string
     {
         return 'producers';
     }
 
-    /**
-     * Mandatory path segments placed between the category and the filters.
-     *
-     * @return string
-     */
     protected function pathSuffix(): string
     {
         return '/country/' . rawurlencode($this->country);

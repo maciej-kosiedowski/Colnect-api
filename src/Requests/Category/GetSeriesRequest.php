@@ -16,16 +16,11 @@ use Slimad\ColnectApi\Support\Guard;
  */
 class GetSeriesRequest extends CategoryRequest
 {
-    /**
-     * @var string
-     */
     protected string $producer;
 
     /**
-     * @param CategoryType|string $category
      * @param int|string $producer Mandatory producer ID. In categories where the
      *                             producer is the country, pass the country ID.
-     * @param Filters|null $filters
      *
      * @throws \Slimad\ColnectApi\Exceptions\InvalidArgumentException When the category or producer is malformed.
      */
@@ -36,21 +31,11 @@ class GetSeriesRequest extends CategoryRequest
         parent::__construct($category, $filters);
     }
 
-    /**
-     * The CAPI action this request performs.
-     *
-     * @return string
-     */
     protected function action(): string
     {
         return 'series';
     }
 
-    /**
-     * Mandatory path segments placed between the category and the filters.
-     *
-     * @return string
-     */
     protected function pathSuffix(): string
     {
         return '/producer/' . rawurlencode($this->producer);

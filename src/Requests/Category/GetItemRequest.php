@@ -24,23 +24,13 @@ class GetItemRequest extends CategoryRequest
      */
     public const MAX_IDS = 50;
 
-    /**
-     * @var string
-     */
     protected string $ids;
 
-    /**
-     * @var bool
-     */
     protected bool $includeFieldIds;
 
-    /**
-     * @var bool
-     */
     protected bool $includeDetails;
 
     /**
-     * @param CategoryType|string $category
      * @param int|string|array<int, int|string> $ids One ID, a comma separated list or a list of IDs.
      * @param bool $includeFieldIds Append the ID to each field name, for example "Gibraltar [2610]".
      * @param bool $includeDetails Return the names of referenced records as nested arrays.
@@ -60,21 +50,11 @@ class GetItemRequest extends CategoryRequest
         parent::__construct($category);
     }
 
-    /**
-     * The CAPI action this request performs.
-     *
-     * @return string
-     */
     protected function action(): string
     {
         return 'item';
     }
 
-    /**
-     * Mandatory path segments placed between the category and the filters.
-     *
-     * @return string
-     */
     protected function pathSuffix(): string
     {
         $suffix = '/id/' . $this->ids;

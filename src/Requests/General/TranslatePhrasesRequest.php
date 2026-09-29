@@ -24,11 +24,6 @@ class TranslatePhrasesRequest extends Request implements HasBody
 {
     use HasFormBody;
 
-    /**
-     * The HTTP method of the request
-     *
-     * @var Method
-     */
     protected Method $method = Method::POST;
 
     /**
@@ -54,19 +49,12 @@ class TranslatePhrasesRequest extends Request implements HasBody
         $this->phrases = array_values($phrases);
     }
 
-    /**
-     * The endpoint for the request
-     *
-     * @return string
-     */
     public function resolveEndpoint(): string
     {
         return '/translate_phrases';
     }
 
     /**
-     * Default body
-     *
      * @return array<string, mixed>
      */
     protected function defaultBody(): array

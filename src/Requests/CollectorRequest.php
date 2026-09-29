@@ -17,16 +17,8 @@ use Slimad\ColnectApi\Support\Guard;
  */
 abstract class CollectorRequest extends Request
 {
-    /**
-     * The HTTP method of the request
-     *
-     * @var Method
-     */
     protected Method $method = Method::GET;
 
-    /**
-     * @var string
-     */
     protected string $collector;
 
     /**
@@ -41,26 +33,17 @@ abstract class CollectorRequest extends Request
 
     /**
      * The CAPI action this request performs.
-     *
-     * @return string
      */
     abstract protected function action(): string;
 
     /**
      * The collector this request is bound to.
-     *
-     * @return string
      */
     public function getCollector(): string
     {
         return $this->collector;
     }
 
-    /**
-     * The endpoint for the request
-     *
-     * @return string
-     */
     public function resolveEndpoint(): string
     {
         return '/' . $this->action() . '/collector/' . rawurlencode($this->collector);

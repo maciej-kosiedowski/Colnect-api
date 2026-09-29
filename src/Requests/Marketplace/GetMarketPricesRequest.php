@@ -18,18 +18,11 @@ use Slimad\ColnectApi\Support\Guard;
  */
 class GetMarketPricesRequest extends CategoryRequest
 {
-    /**
-     * @var string
-     */
     protected string $ids;
 
-    /**
-     * @var int|null
-     */
     protected ?int $days;
 
     /**
-     * @param CategoryType|string $category
      * @param int|string|array<int, int|string> $ids One ID, a comma separated list or a list of item IDs.
      * @param int|null $days Number of days of history to take into account.
      *
@@ -48,21 +41,11 @@ class GetMarketPricesRequest extends CategoryRequest
         parent::__construct($category);
     }
 
-    /**
-     * The CAPI action this request performs.
-     *
-     * @return string
-     */
     protected function action(): string
     {
         return 'market_prices';
     }
 
-    /**
-     * Mandatory path segments placed between the category and the filters.
-     *
-     * @return string
-     */
     protected function pathSuffix(): string
     {
         $suffix = '/ids/' . $this->ids;

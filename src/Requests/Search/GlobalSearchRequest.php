@@ -26,26 +26,12 @@ class GlobalSearchRequest extends Request
      */
     public const COLLECTORS = 'collectors';
 
-    /**
-     * The HTTP method of the request
-     *
-     * @var Method
-     */
     protected Method $method = Method::GET;
 
-    /**
-     * @var string|null
-     */
     protected ?string $collectableType;
 
-    /**
-     * @var string
-     */
     protected string $searchQuery;
 
-    /**
-     * @var int|null
-     */
     protected ?int $page;
 
     /**
@@ -71,11 +57,6 @@ class GlobalSearchRequest extends Request
         $this->page = $page;
     }
 
-    /**
-     * The endpoint for the request
-     *
-     * @return string
-     */
     public function resolveEndpoint(): string
     {
         $endpoint = '/search';

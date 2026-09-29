@@ -21,9 +21,6 @@ final class Guard
 
     /**
      * Validate a category and return its string value.
-     *
-     * @param CategoryType|string $category
-     * @return string
      */
     public static function category(CategoryType|string $category): string
     {
@@ -36,10 +33,6 @@ final class Guard
 
     /**
      * Validate a lowercase, underscore separated value such as a category name.
-     *
-     * @param string $value
-     * @param string $label
-     * @return string
      */
     public static function slug(string $value, string $label): string
     {
@@ -52,9 +45,6 @@ final class Guard
 
     /**
      * Validate a filter key, for example "country" or "face_value".
-     *
-     * @param string $key
-     * @return string
      */
     public static function filterKey(string $key): string
     {
@@ -67,10 +57,6 @@ final class Guard
 
     /**
      * Validate that a value is not an empty string.
-     *
-     * @param string $value
-     * @param string $label
-     * @return string
      */
     public static function nonEmpty(string $value, string $label): string
     {
@@ -84,10 +70,6 @@ final class Guard
     /**
      * Validate that a value carries no control characters, which would allow
      * header or path injection.
-     *
-     * @param string $value
-     * @param string $label
-     * @return string
      */
     public static function printable(string $value, string $label): string
     {
@@ -102,9 +84,6 @@ final class Guard
 
     /**
      * Validate a Colnect collector (user) name.
-     *
-     * @param string $collector
-     * @return string
      */
     public static function collector(string $collector): string
     {
@@ -119,10 +98,6 @@ final class Guard
 
     /**
      * Validate a positive integer.
-     *
-     * @param int $value
-     * @param string $label
-     * @return int
      */
     public static function positiveInt(int $value, string $label): int
     {
@@ -135,12 +110,6 @@ final class Guard
 
     /**
      * Validate an integer within an inclusive range.
-     *
-     * @param int $value
-     * @param int $min
-     * @param int $max
-     * @param string $label
-     * @return int
      */
     public static function between(int $value, int $min, int $max, string $label): int
     {
@@ -155,9 +124,7 @@ final class Guard
      * Normalise a list of numeric IDs into the comma separated form CAPI expects.
      *
      * @param int|string|array<int, int|string> $ids A single ID, a comma separated string or a list of IDs.
-     * @param string $label
      * @param int|null $max Maximum number of IDs accepted by the endpoint.
-     * @return string
      */
     public static function idList(int|string|array $ids, string $label, ?int $max = null): string
     {

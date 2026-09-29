@@ -13,11 +13,6 @@ use Slimad\ColnectApi\Requests\CategoryRequest;
  */
 class GetCatalogsRequest extends CategoryRequest
 {
-    /**
-     * The CAPI action this request performs.
-     *
-     * @return string
-     */
     protected function action(): string
     {
         return 'catalogs';

@@ -16,13 +16,9 @@ use Slimad\ColnectApi\Requests\CategoryRequest;
  */
 class GetFieldTitlesRequest extends CategoryRequest
 {
-    /**
-     * @var bool
-     */
     protected bool $getClassNames;
 
     /**
-     * @param CategoryType|string $category
      * @param bool $getClassNames Output raw class names instead of display titles
      *                            for multi-value fields. Kept by Colnect for
      *                            backward compatibility only.
@@ -36,21 +32,11 @@ class GetFieldTitlesRequest extends CategoryRequest
         parent::__construct($category);
     }
 
-    /**
-     * The CAPI action this request performs.
-     *
-     * @return string
-     */
     protected function action(): string
     {
         return 'field_titles';
     }
 
-    /**
-     * Mandatory path segments placed between the category and the filters.
-     *
-     * @return string
-     */
     protected function pathSuffix(): string
     {
         return $this->getClassNames ? '/get_class_names/1' : '';

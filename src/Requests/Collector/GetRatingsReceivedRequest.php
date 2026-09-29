@@ -13,11 +13,6 @@ use Slimad\ColnectApi\Requests\CollectorRequest;
  */
 class GetRatingsReceivedRequest extends CollectorRequest
 {
-    /**
-     * The CAPI action this request performs.
-     *
-     * @return string
-     */
     protected function action(): string
     {
         return 'ratings_received';

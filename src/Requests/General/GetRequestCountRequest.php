@@ -22,16 +22,8 @@ class GetRequestCountRequest extends Request
      */
     public const MAX_DAYS = 200;
 
-    /**
-     * The HTTP method of the request
-     *
-     * @var Method
-     */
     protected Method $method = Method::GET;
 
-    /**
-     * @var int|null
-     */
     protected ?int $days;
 
     /**
@@ -48,11 +40,6 @@ class GetRequestCountRequest extends Request
         $this->days = $days;
     }
 
-    /**
-     * The endpoint for the request
-     *
-     * @return string
-     */
     public function resolveEndpoint(): string
     {
         if ($this->days === null) {

@@ -66,8 +66,6 @@ enum CategoryType: string
      * CAPI accepts the generic "producer" filter everywhere, but Colnect URLs
      * use a per-category name such as "company" or "brand". Categories without
      * a dedicated name fall back to "producer".
-     *
-     * @return string
      */
     public function producerFilter(): string
     {
@@ -101,8 +99,6 @@ enum CategoryType: string
      *
      * When true there is no producers list to fetch and the country filter
      * must be sent as "producer" - see the producer_is_country action.
-     *
-     * @return bool
      */
     public function producerIsCountry(): bool
     {

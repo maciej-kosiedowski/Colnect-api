@@ -36,7 +36,6 @@ final class PictureUrl
      * @param string $itemName Value of item_name, slugged with Str::urlize().
      * @param PictureSize $size Thumbnail (/t/) or full size (/f/) picture.
      * @param string $extension Image extension, jpg unless stated otherwise.
-     * @return string
      */
     public static function item(
         int $pictureId,
@@ -61,9 +60,7 @@ final class PictureUrl
     /**
      * Build the URL of a country flag from the ID returned by country_flag.
      *
-     * @param int $flagId
      * @param int $size Width of the flag in pixels, as served by Colnect.
-     * @return string
      */
     public static function flag(int $flagId, int $size = 32): string
     {

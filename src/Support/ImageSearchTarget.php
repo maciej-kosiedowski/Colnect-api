@@ -27,9 +27,6 @@ final class ImageSearchTarget
 
     /**
      * Search by the URL of an image on the internet.
-     *
-     * @param string $url
-     * @return self
      */
     public static function fromUrl(string $url): self
     {
@@ -38,9 +35,6 @@ final class ImageSearchTarget
 
     /**
      * Search by base64 encoded image data.
-     *
-     * @param string $data
-     * @return self
      */
     public static function fromBase64(string $data): self
     {
@@ -49,9 +43,6 @@ final class ImageSearchTarget
 
     /**
      * Search by an image read from the local disk.
-     *
-     * @param string $path
-     * @return self
      */
     public static function fromFile(string $path): self
     {
@@ -60,9 +51,6 @@ final class ImageSearchTarget
 
     /**
      * Add the URL of the back picture (coins only).
-     *
-     * @param string $url
-     * @return self
      */
     public function withBackUrl(string $url): self
     {
@@ -71,9 +59,6 @@ final class ImageSearchTarget
 
     /**
      * Add base64 encoded data of the back picture (coins only).
-     *
-     * @param string $data
-     * @return self
      */
     public function withBackBase64(string $data): self
     {
@@ -82,9 +67,6 @@ final class ImageSearchTarget
 
     /**
      * Add the back picture read from the local disk (coins only).
-     *
-     * @param string $path
-     * @return self
      */
     public function withBackFile(string $path): self
     {
@@ -93,8 +75,6 @@ final class ImageSearchTarget
 
     /**
      * Whether a back picture was added to the target.
-     *
-     * @return bool
      */
     public function hasBackPicture(): bool
     {
@@ -124,9 +104,7 @@ final class ImageSearchTarget
     }
 
     /**
-     * @param string $name
      * @param array{value: string, filename: string|null} $part
-     * @return self
      */
     private function withBack(string $name, array $part): self
     {
@@ -141,7 +119,6 @@ final class ImageSearchTarget
     }
 
     /**
-     * @param string $url
      * @return array{value: string, filename: string|null}
      */
     private static function url(string $url): array
@@ -160,7 +137,6 @@ final class ImageSearchTarget
     }
 
     /**
-     * @param string $data
      * @return array{value: string, filename: string|null}
      */
     private static function base64(string $data): array
@@ -175,7 +151,6 @@ final class ImageSearchTarget
     }
 
     /**
-     * @param string $path
      * @return array{value: string, filename: string|null}
      */
     private static function file(string $path): array

@@ -18,16 +18,8 @@ use Slimad\ColnectApi\Support\Guard;
  */
 class GetCountryFlagsRequest extends Request
 {
-    /**
-     * The HTTP method of the request
-     *
-     * @var Method
-     */
     protected Method $method = Method::GET;
 
-    /**
-     * @var string
-     */
     protected string $ids;
 
     /**
@@ -40,11 +32,6 @@ class GetCountryFlagsRequest extends Request
         $this->ids = Guard::idList($ids, 'Country IDs');
     }
 
-    /**
-     * The endpoint for the request
-     *
-     * @return string
-     */
     public function resolveEndpoint(): string
     {
         return '/country_flag/ids/' . $this->ids;

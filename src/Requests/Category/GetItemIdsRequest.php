@@ -13,21 +13,11 @@ use Slimad\ColnectApi\Requests\CategoryRequest;
  */
 class GetItemIdsRequest extends CategoryRequest
 {
-    /**
-     * The CAPI action this request performs.
-     *
-     * @return string
-     */
     protected function action(): string
     {
         return 'list_id';
     }
 
-    /**
-     * Whether CAPI rejects this action when no filter is given.
-     *
-     * @return bool
-     */
     protected function requiresFilters(): bool
     {
         return true;

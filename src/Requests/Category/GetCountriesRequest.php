@@ -13,11 +13,6 @@ use Slimad\ColnectApi\Requests\CategoryRequest;
  */
 class GetCountriesRequest extends CategoryRequest
 {
-    /**
-     * The CAPI action this request performs.
-     *
-     * @return string
-     */
     protected function action(): string
     {
         return 'countries';

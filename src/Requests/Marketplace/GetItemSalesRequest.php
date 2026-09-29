@@ -27,28 +27,15 @@ class GetItemSalesRequest extends CategoryRequest
      */
     public const MAX_SALES = 20;
 
-    /**
-     * @var string
-     */
     protected string $ids;
 
-    /**
-     * @var ItemsInSale|null
-     */
     protected ?ItemsInSale $itemsInSale;
 
-    /**
-     * @var bool
-     */
     protected bool $onlyIds;
 
-    /**
-     * @var int|null
-     */
     protected ?int $maxSales;
 
     /**
-     * @param CategoryType|string $category
      * @param int|string|array<int, int|string> $ids One ID, a comma separated list or a list of item IDs.
      * @param ItemsInSale|null $itemsInSale Filter by the number of items in the sale.
      * @param bool $onlyIds Return only the sale IDs.
@@ -76,21 +63,11 @@ class GetItemSalesRequest extends CategoryRequest
         parent::__construct($category);
     }
 
-    /**
-     * The CAPI action this request performs.
-     *
-     * @return string
-     */
     protected function action(): string
     {
         return 'item_sales';
     }
 
-    /**
-     * Mandatory path segments placed between the category and the filters.
-     *
-     * @return string
-     */
     protected function pathSuffix(): string
     {
         $suffix = '/item_id/' . $this->ids;

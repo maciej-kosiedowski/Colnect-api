@@ -35,7 +35,6 @@ final class Filters
 
     /**
      * @param array<string, string|int|array<int, string|int>> $filters
-     * @return self
      */
     public static function make(array $filters = []): self
     {
@@ -45,9 +44,7 @@ final class Filters
     /**
      * Return a copy of this collection with an extra filter applied.
      *
-     * @param string $key
      * @param string|int|array<int, string|int> $value
-     * @return self
      */
     public function with(string $key, string|int|array $value): self
     {
@@ -59,82 +56,46 @@ final class Filters
         return $clone;
     }
 
-    /**
-     * @param string|int $value
-     * @return self
-     */
     public function country(string|int $value): self
     {
         return $this->with('country', $value);
     }
 
-    /**
-     * @param string|int $value
-     * @return self
-     */
     public function producer(string|int $value): self
     {
         return $this->with('producer', $value);
     }
 
-    /**
-     * @param string|int $value
-     * @return self
-     */
     public function series(string|int $value): self
     {
         return $this->with('series', $value);
     }
 
-    /**
-     * @param string|int $value
-     * @return self
-     */
     public function year(string|int $value): self
     {
         return $this->with('year', $value);
     }
 
-    /**
-     * @param string|int $value
-     * @return self
-     */
     public function theme(string|int $value): self
     {
         return $this->with('theme', $value);
     }
 
-    /**
-     * @param string|int $value
-     * @return self
-     */
     public function catalog(string|int $value): self
     {
         return $this->with('catalog', $value);
     }
 
-    /**
-     * @param string|int $value
-     * @return self
-     */
     public function currency(string|int $value): self
     {
         return $this->with('currency', $value);
     }
 
-    /**
-     * @param string|int $value
-     * @return self
-     */
     public function faceValue(string|int $value): self
     {
         return $this->with('face_value', $value);
     }
 
-    /**
-     * @param string|int $value
-     * @return self
-     */
     public function system(string|int $value): self
     {
         return $this->with('system', $value);
@@ -142,36 +103,22 @@ final class Filters
 
     /**
      * Sort option, see the category_sort_options action for the available names.
-     *
-     * @param string $sort
-     * @return self
      */
     public function sort(string $sort): self
     {
         return $this->with('sort', $sort);
     }
 
-    /**
-     * @param int $page
-     * @return self
-     */
     public function page(int $page): self
     {
         return $this->with('page', Guard::positiveInt($page, 'Page'));
     }
 
-    /**
-     * @param string $key
-     * @return bool
-     */
     public function has(string $key): bool
     {
         return array_key_exists($key, $this->filters);
     }
 
-    /**
-     * @return bool
-     */
     public function isEmpty(): bool
     {
         return $this->filters === [];
@@ -187,8 +134,6 @@ final class Filters
 
     /**
      * Render the filters as path segments, ready to be appended to an endpoint.
-     *
-     * @return string
      */
     public function toPath(): string
     {
@@ -202,9 +147,7 @@ final class Filters
     }
 
     /**
-     * @param string $key
      * @param string|int|array<int, string|int> $value
-     * @return string
      */
     private static function normaliseValue(string $key, string|int|array $value): string
     {

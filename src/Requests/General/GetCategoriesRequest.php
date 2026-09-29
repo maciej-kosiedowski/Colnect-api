@@ -9,18 +9,8 @@ use Saloon\Http\Request;
 
 class GetCategoriesRequest extends Request
 {
-    /**
-     * The HTTP method of the request
-     *
-     * @var Method
-     */
     protected Method $method = Method::GET;
 
-    /**
-     * The endpoint for the request
-     *
-     * @return string
-     */
     public function resolveEndpoint(): string
     {
         return '/categories';

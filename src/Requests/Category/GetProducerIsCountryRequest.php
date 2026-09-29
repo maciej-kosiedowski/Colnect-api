@@ -13,11 +13,6 @@ use Slimad\ColnectApi\Requests\CategoryRequest;
  */
 class GetProducerIsCountryRequest extends CategoryRequest
 {
-    /**
-     * The CAPI action this request performs.
-     *
-     * @return string
-     */
     protected function action(): string
     {
         return 'producer_is_country';
