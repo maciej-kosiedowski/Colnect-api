@@ -4,47 +4,22 @@ declare(strict_types=1);
 
 namespace Slimad\ColnectApi\Requests\Category;
 
-use Saloon\Enums\Method;
-use Saloon\Http\Request;
-use Slimad\ColnectApi\Enums\CategoryType;
+use Slimad\ColnectApi\Requests\CategoryRequest;
 
-class GetCountriesRequest extends Request
+/**
+ * List of countries, with the number of items each of them has. Filters are optional; returns [country_id, country_name, item_count].
+ *
+ * GET /countries/cat/{category}
+ */
+class GetCountriesRequest extends CategoryRequest
 {
     /**
-     * The HTTP method of the request
-     *
-     * @var Method
-     */
-    protected Method $method = Method::GET;
-
-    /**
-     * @var CategoryType|string
-     */
-    protected CategoryType|string $category;
-
-    /**
-     * @param CategoryType|string $category
-     *
-     * @throws \InvalidArgumentException When a string category contains unexpected characters.
-     */
-    public function __construct(CategoryType|string $category)
-    {
-        if (is_string($category) && preg_match('/^[a-z_]+$/D', $category) !== 1) {
-            throw new \InvalidArgumentException('Category must contain only lowercase letters and underscores.');
-        }
-
-        $this->category = $category;
-    }
-
-    /**
-     * The endpoint for the request
+     * The CAPI action this request performs.
      *
      * @return string
      */
-    public function resolveEndpoint(): string
+    protected function action(): string
     {
-        $categoryValue = $this->category instanceof CategoryType ? $this->category->value : $this->category;
-
-        return '/countries/cat/' . rawurlencode($categoryValue);
+        return 'countries';
     }
 }

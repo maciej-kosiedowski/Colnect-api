@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Saloon\Enums\Method;
 use Slimad\ColnectApi\Enums\CategoryType;
 use Slimad\ColnectApi\Requests\Category\GetCountriesRequest;
+use Slimad\ColnectApi\Support\Filters;
 
 class GetCountriesRequestTest extends TestCase
 {
@@ -25,6 +26,13 @@ class GetCountriesRequestTest extends TestCase
 
         $this->assertEquals(Method::GET, $request->getMethod());
         $this->assertEquals('/countries/cat/stamps', $request->resolveEndpoint());
+    }
+
+    public function test_it_resolves_endpoint_with_filters(): void
+    {
+        $request = new GetCountriesRequest(CategoryType::Stamps, Filters::make()->theme(7));
+
+        $this->assertEquals('/countries/cat/stamps/theme/7', $request->resolveEndpoint());
     }
 
     public function test_it_rejects_string_category_with_path_traversal(): void
