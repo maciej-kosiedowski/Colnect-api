@@ -24,7 +24,6 @@ A lightweight, fully typed PHP SDK for the [Colnect](https://colnect.com) REST A
 - [Image search](#image-search)
 - [Error handling](#error-handling)
 - [Mocking & testing your integration](#mocking--testing-your-integration)
-- [Upgrading](#upgrading)
 - [Development](#development)
   - [Running the test suite](#running-the-test-suite)
   - [Static analysis](#static-analysis)
@@ -380,19 +379,6 @@ $languages = $connector->send(new GetLanguagesRequest())->json();
 
 See [`tests/ColnectConnectorTest.php`](tests/ColnectConnectorTest.php) for end-to-end examples of asserting headers, payloads and the HMAC signature.
 
-## Upgrading
-
-The following changes are **breaking** and align the SDK with the published API specification:
-
-| Change | Before | Now |
-| ------ | ------ | --- |
-| `GetItemsListRequest` endpoint | `GET /items/cat/{category}` | `GET /list/cat/{category}` - `list` is the documented action name |
-| `GetItemsListRequest` filters | optional | at least one filter is required, as the specification demands |
-| `CategoryType` cases | partly invented names (`TradeCards`, `TCG`, `Pins`, `Lighters`, ...) | the 46 module names Colnect actually uses (`bottlecaps`, `teabags`, `trading_card_games`, ...) |
-| `GlobalSearchRequest` first argument | `string` | `CategoryType|string|null` - `null` searches every category |
-
-Categories that were renamed rather than removed: `bottle_caps` is now `bottlecaps`, `tea_bags` is now `teabags`. Anything that pointed at a category Colnect does not have (`tcg`, `pins`, `lighters`, `figurines`, `toys`, ...) never resolved and has no replacement.
-
 ## Development
 
 Clone the repository and install dev dependencies:
@@ -520,18 +506,8 @@ Copyright (c) 2026 Maciej Kosiedowski
 
 See the [LICENSE](LICENSE) file for the full text. In short, you are free to use, copy, modify, merge, publish, distribute, sublicense and/or sell copies of the software, provided the original copyright notice and the license text are included in all copies or substantial portions of the software. The software is provided "as is", without warranty of any kind.
 
-## Attribution required by Colnect
-
-Colnect's Terms of Service (10. G.) require every application built on CAPI to credit Colnect in a visible place, together with a link to the most relevant Colnect page:
-
-> Catalog information courtesy of Colnect, an online collectors community.
-
-Keys may also be revoked after four weeks of inactivity, and Colnect may ask for payment once an application exceeds 100,000 requests.
-
 ## Credits
 
 - **Author / Maintainer:** [Maciej Kosiedowski](https://github.com/maciej-kosiedowski)
-- **Built with:** [Saloon](https://docs.saloon.dev) by Sam Carré
-- **Data provider:** [Colnect](https://colnect.com) – the largest online collectors' community
 
 If this package is useful to you, please consider [starring the repository on GitHub](https://github.com/maciej-kosiedowski/Colnect-api) ⭐.
