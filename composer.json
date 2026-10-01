@@ -1,8 +1,21 @@
 {
     "name": "slimad/colnect-api",
     "description": "A lightweight Saloon SDK for the Colnect API",
+    "keywords": [
+        "colnect",
+        "colnect api"
+    ],
+    "homepage": "https://znaczkopol.pl",
     "type": "library",
     "license": "MIT",
+    "authors": [
+        {
+            "name": "Maciej Kosiedowski"
+        },
+        {
+            "name": "Slimad"
+        }
+    ],
     "require": {
         "php": "^8.2",
         "saloonphp/saloon": "^3.0"
