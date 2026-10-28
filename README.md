@@ -170,8 +170,8 @@ Privacy settings may make Colnect answer `private` instead of the data.
 | ------------------------------------------------ | ------------------------------------------ | ------------------- |
 | `Category\GetCountriesRequest`                    | `GET /countries/cat/{category}`            | - |
 | `Category\GetProducersRequest`                    | `GET /producers/cat/{category}/country/{country}` | country |
-| `Category\GetSeriesRequest`                       | `GET /series/cat/{category}/producer/{producer}` | producer |
-| `Category\GetYearsRequest`                        | `GET /years/cat/{category}/producer/{producer}` | producer |
+| `Category\GetSeriesRequest`                       | `GET /series/cat/{category}/{country\|producer}/{producer}` | producer |
+| `Category\GetYearsRequest`                        | `GET /years/cat/{category}/{country\|producer}/{producer}` | producer |
 | `Category\GetThemesRequest`                       | `GET /themes/cat/{category}`               | - |
 | `Category\GetCatalogsRequest`                     | `GET /catalogs/cat/{category}`             | - |
 | `Category\GetCurrenciesRequest`                   | `GET /currencies/cat/{category}`           | - |

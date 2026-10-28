@@ -97,8 +97,9 @@ enum CategoryType: string
     /**
      * Whether the producer of this category is the issuing country.
      *
-     * When true there is no producers list to fetch and the country filter
-     * must be sent as "producer" - see the producer_is_country action.
+     * When true there is no producers list to fetch, and the series and years
+     * actions take the country as `country/{id}` - CAPI answers `producer/{id}`
+     * with HTTP 400 for stamps (see the producer_is_country action).
      */
     public function producerIsCountry(): bool
     {
