@@ -12,7 +12,7 @@ use Slimad\ColnectApi\Support\Guard;
 /**
  * List of series of a producer. The producer filter is mandatory; returns [series_id, series_name, item_count].
  *
- * GET /series/cat/{category}/producer/{producer}/{filters}
+ * GET /series/cat/{category}/{country|producer}/{producer}/{filters}
  */
 class GetSeriesRequest extends CategoryRequest
 {
@@ -38,6 +38,10 @@ class GetSeriesRequest extends CategoryRequest
 
     protected function pathSuffix(): string
     {
-        return '/producer/' . rawurlencode($this->producer);
+        // CAPI rejects `producer/` with HTTP 400 "Invalid filter requested" where the producer is
+        // the country (verified for stamps); those categories take the `country/` filter.
+        $filter = CategoryType::tryFrom($this->category)?->producerIsCountry() === true ? 'country' : 'producer';
+
+        return '/' . $filter . '/' . rawurlencode($this->producer);
     }
 }

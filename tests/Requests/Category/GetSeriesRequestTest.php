@@ -18,21 +18,27 @@ class GetSeriesRequestTest extends TestCase
         $request = new GetSeriesRequest(CategoryType::Stamps, 2610);
 
         $this->assertEquals(Method::GET, $request->getMethod());
-        $this->assertSame('/series/cat/stamps/producer/2610', $request->resolveEndpoint());
+        $this->assertSame('/series/cat/stamps/country/2610', $request->resolveEndpoint());
+    }
+
+    public function test_it_uses_the_producer_filter_where_the_producer_is_not_the_country(): void
+    {
+        $this->assertSame('/series/cat/phonecards/producer/12', (new GetSeriesRequest(CategoryType::Phonecards, 12))->resolveEndpoint());
+        $this->assertSame('/series/cat/custom_category/producer/12', (new GetSeriesRequest('custom_category', 12))->resolveEndpoint());
     }
 
     public function test_it_appends_filters_after_the_producer(): void
     {
         $request = new GetSeriesRequest('stamps', 2610, Filters::make()->year(1980));
 
-        $this->assertSame('/series/cat/stamps/producer/2610/year/1980', $request->resolveEndpoint());
+        $this->assertSame('/series/cat/stamps/country/2610/year/1980', $request->resolveEndpoint());
     }
 
     public function test_it_url_encodes_the_producer(): void
     {
         $request = new GetSeriesRequest(CategoryType::Stamps, '../admin');
 
-        $this->assertSame('/series/cat/stamps/producer/..%2Fadmin', $request->resolveEndpoint());
+        $this->assertSame('/series/cat/stamps/country/..%2Fadmin', $request->resolveEndpoint());
     }
 
     public function test_it_rejects_an_empty_producer(): void
