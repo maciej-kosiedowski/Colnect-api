@@ -3,7 +3,7 @@
 A lightweight, fully typed PHP SDK for the [Colnect](https://colnect.com) REST API, built on top of [Saloon v3](https://docs.saloon.dev). It ships with first-class support for HMAC request signing, request mocking, PHPStan level 9 static analysis and mutation testing via Infection.
 
 [![Tests](https://github.com/maciej-kosiedowski/Colnect-api/actions/workflows/tests.yml/badge.svg)](https://github.com/maciej-kosiedowski/Colnect-api/actions/workflows/tests.yml)
-[![PHP Version](https://img.shields.io/badge/php-8.2%20%7C%208.3%20%7C%208.4-8892BF.svg)](https://www.php.net/)
+[![PHP Version](https://img.shields.io/badge/php-8.2%20%7C%208.3%20%7C%208.4%20%7C%208.5-8892BF.svg)](https://www.php.net/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![PHPStan Level](https://img.shields.io/badge/PHPStan-level%209-brightgreen.svg)](phpstan.neon)
 
@@ -60,7 +60,7 @@ A lightweight, fully typed PHP SDK for the [Colnect](https://colnect.com) REST A
 
 | Component        | Version                |
 | ---------------- | ---------------------- |
-| PHP              | `^8.2` (tested on 8.2, 8.3 and 8.4) |
+| PHP              | `^8.2` (tested on 8.2, 8.3, 8.4 and 8.5) |
 | saloonphp/saloon | `^3.0`                 |
 | ext-pcov         | dev only (for Infection coverage) |
 
